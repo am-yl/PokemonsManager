@@ -1,0 +1,21 @@
+<div class="container my-5">
+    <h2>Les {{ countGen }} différentes générations</h2>
+    <hr>
+    <ul *ngFor="let gen of generations"
+        class="list-group list-group-flush">
+        <li class="list-group-item">
+            <a routerLink="/generations"
+               (click)="showGen(gen['url'])"
+               class="link-dark">
+                {{gen['name']}} - {{gen['url']}}
+            </a>
+        </li>
+    </ul>
+    <div>
+        <p *ngFor="let pok of pokemons['pokemon_species']"
+           class="m-2 d-inline-block">
+            <a [href]="pok['ul']"
+               target="_blank">{{pok['name']}}</a>
+        </p>
+    </div>
+</div>

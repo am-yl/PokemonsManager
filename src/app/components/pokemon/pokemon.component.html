@@ -1,0 +1,28 @@
+<div class="card">
+    <img [src]="pokpok?.img"
+         [alt]="pokpok?.nom"
+         class="card-img-top w-50 align-self-center">
+
+    <div class="card-body">
+        <h5 class="card-title">{{pokpok?.pokedex | number: '3.0-0'}} - {{pokpok?.nom}}</h5>
+    </div>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Catégorie : <span *ngIf="pokpok?.cat; else NA">{{pokpok?.cat}}</span></li>
+        <li class="list-group-item">Type(s) : {{pokpok?.type}}</li>
+        <li class="list-group-item">Taille :
+            <span *ngIf="pokpok?.taille != null && pokpok?.taille != undefined; else NA">{{pokpok?.taille | number:'1.0-2'}}m</span>
+        </li>
+        <li class="list-group-item">Poids :
+            <span *ngIf="pokpok?.poids != null && pokpok?.poids != undefined; else NA">{{pokpok?.poids | number:'1.0-2'}}kg</span>
+        </li>
+    </ul>
+    <div class="w-100 d-flex justify-content-end">
+        <button type="button"
+                class="btn btn-outline-primary m-3"
+                (click)="choisirCePokemon()">Sélectionner
+        </button>
+    </div>
+</div>
+
+<ng-template #NA>N/A</ng-template>

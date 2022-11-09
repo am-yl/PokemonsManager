@@ -1,0 +1,53 @@
+<div class="container my-5">
+    <h2>Les Pokpok :</h2>
+    <hr>
+    <div class="row border p-2 rounded mx-0 mb-2">
+        <p>{{nbrPokemons}} Pokémons en base de données</p>
+        <p *ngIf="pokemonChoisi != ''; else pasChoisi">Pokémon sélectionné : {{pokemonChoisi}}</p>
+        <ng-template #pasChoisi>
+            <p>Aucun Pokémon sélectionné</p>
+        </ng-template>
+    </div>
+    <form method="post"
+          #cherchePokemon="ngForm"
+          class="d-flex mb-2 w-50">
+        <input type="text"
+               name="nom"
+               #nom="ngModel"
+               [(ngModel)]="formulaireRecherche.nom"
+               class="form-control w-90 me-2"
+               [pattern]="checkNom"
+               [class.is-invalid]="nom.invalid"
+               (keyup)="affResRech(cherchePokemon.value.nom)"
+               placeholder="Nom du pokémon">
+        <button type="reset"
+                class="btn btn-outline-secondary me-2"
+                (click)="allPokPok()">Annuler
+        </button>
+        <select class="form-select"
+                name="ordre"
+                [(ngModel)]="formulaireRecherche.ordre">
+            <option value="ASC">Ascendant</option>
+            <option value="DESC">Descendant</option>
+        </select>
+    </form>
+    <div *ngIf="nom.invalid"
+         class="text-danger">Le champ de saisie ne doit contenir que des lettres.
+    </div>
+    <div class="row"
+         *ngIf="pokemons.length > 0; else noPokPok">
+        <div *ngFor="let pokemon of pokemons | sortByPokedex: formulaireRecherche.ordre"
+             class="col-4 my-1">
+
+            <app-pokemon [pokpok]="pokemon"
+                         (choisir)="receptionChoix($event)">
+            </app-pokemon>
+        </div>
+    </div>
+    <ng-template #noPokPok>
+        <img [src]="C3PO"
+             *ngIf="C3PO.length > 0"
+             class="d-block m-auto">
+        <p *ngIf="C3PO.length == 0">Aucun pokpok ne correspond à la recherche !</p>
+    </ng-template>
+</div>
